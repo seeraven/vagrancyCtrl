@@ -1,0 +1,32 @@
+usage: vagrancyCtrl delete [-h] [-f] [-p PROVIDER] box_name [version]
+
+Delete matching vagrant boxes from the vagrancy server. The box to delete
+must be specified as an argument, e.g., as:
+ vagrancyCtrl delete base/ubuntu-14.04.5-server-armv7-daily_pkgbuildbox
+
+To delete only a certain version of the box, you can specify a pattern as
+the second argument. This pattern is matched with all found versions of the
+box and only matching versions are deleted. The special version '-1' can be
+used to match all but the latest version:
+ vagrancyCtrl delete base/ubuntu-14.04.5-server-armv7-daily_pkgbuildbox -1
+
+Like the print command, you can specifiy a provider using the '--provider'
+option to limit the deletion to the specified provider.
+
+Please note that the deletion is only performed when you specify the '--force'
+option. Otherwise, only the matching URLs are printed. This is a precaution to
+avoid unintentional deletion.
+
+Return codes:
+ 0 - Communication was successfull.
+ 1 - Communication failed.
+
+positional arguments:
+  box_name              The vagrant box name pattern. A box name must have a layout of <username>/<boxname>. Default: *
+  version               The version to delete. The string is interpreted as a shell pattern. Use '*' to delete all versions or '-1' to delete all but the latest version. Default: *
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -f, --force           Delete the matching boxes. Otherwise matching boxes are only printed on stdout but no delete operation takes place.
+  -p PROVIDER, --provider PROVIDER
+                        Only delete boxes that have the specified provider, e.g., libvirt or virtualbox.

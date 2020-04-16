@@ -28,12 +28,22 @@ UNITTEST_FILES     := $(shell find $(UNITTEST_DIR) -name '*.py')
 
 
 # ----------------------------------------------------------------------------
+#  HANDLE TARGET 'run'
+# ----------------------------------------------------------------------------
+ifeq (run,$(firstword $(MAKECMDGOALS)))
+  RUN_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+  # Turn them into do-nothing targets
+  $(eval $(RUN_ARGS):;@:)
+endif
+
+
+# ----------------------------------------------------------------------------
 #  DEFAULT TARGETS
 # ----------------------------------------------------------------------------
 
-.PHONY: help system-setup venv-bash check-style pylint pycodestyle flake8 unittests unittests-coverage apidoc doc man test clean
+.PHONY: help system-setup venv-bash run check-style pylint pycodestyle flake8 tests tests-coverage unittests unittests-coverage functional-tests functional-tests-coverage apidoc doc man pyinstaller clean
 
-all:	check-style.venv unittests.venv
+all:	check-style.venv tests-coverage.venv doc.venv man.venv
 
 
 # ----------------------------------------------------------------------------
@@ -43,32 +53,46 @@ help:
 	@echo "Makefile for vagrancyCtrl"
 	@echo "========================="
 	@echo
-	@echo "Targets for Style Checking in venv:"
-	@echo " check-style.venv : Call pylint, pycodestyle and flake8"
-	@echo " pylint.venv      : Call pylint on the source files."
-	@echo " pycodestyle.venv : Call pycodestyle on the source files."
-	@echo " flake8.venv      : Call flake8 on the source files."
+	@echo "Note: All targets can be executed in a virtual environment (venv)"
+	@echo "      by using the '.venv' suffix."
+	@echo "      For example, use the target 'check-style.venv' to perform"
+	@echo "      the style checking in a virtual environment."
 	@echo
-	@echo "Targets for Style Checking in System Environment:"
-	@echo " check-style      : Call pylint, pycodestyle and flake8"
-	@echo " pylint           : Call pylint on the source files."
-	@echo " pycodestyle      : Call pycodestyle on the source files."
-	@echo " flake8           : Call flake8 on the source files."
+	@echo "Targets for Style Checking:"
+	@echo " check-style               : Call pylint, pycodestyle and flake8"
+	@echo " pylint                    : Call pylint on the source files."
+	@echo " pycodestyle               : Call pycodestyle on the source files."
+	@echo " flake8                    : Call flake8 on the source files."
 	@echo
-	@echo "Targets for Functional Tests in local DMD setup:"
-	@echo " test.dlang       : Execute the functional tests."
+	@echo "Targets for Testing:"
+	@echo " tests                     : Execute unittests and functional tests."
+	@echo " tests-coverage            : Determine code coverage of all tests."
+	@echo " unittests                 : Execute unittests."
+	@echo " unittests-coverage        : Determine unittest code coverage."
+	@echo " functional-tests          : Execute functional tests."
+	@echo " functional-tests-coverage : Determine functional tests code coverage."
 	@echo
-	@echo "Targets for Functional Tests in System Environment:"
-	@echo " test             : Execute the functional tests."
+	@echo "Targets for Distribution:"
+	@echo " pyinstaller               : Generate dist/vagrancyCtrl distributable."
+	@echo " pyinstaller-test          : Test the dist/vagrancyCtrl distributable"
+	@echo "                             using the functional tests."
+	@echo
+	@echo "Target for Execution from the sources:"
+	@echo " run                       : Run 'vagrancyCtrl' with the correct"
+	@echo "                             PYTHONPATH variable. All remaining"
+	@echo "                             arguments are forwarded to vagrancyCtrl."
+	@echo "                             Use '--' to enable the usage of options."
+	@echo " Example:"
+	@echo "   make run -- print -h"
 	@echo
 	@echo "venv Setup:"
-	@echo " venv             : Create the venv."
-	@echo " venv-bash        : Start a new shell in the venv for debugging."
+	@echo " venv                      : Create the venv."
+	@echo " venv-bash                 : Start a new shell in the venv for debugging."
 	@echo
 	@echo "Misc Targets:"
-	@echo " system-setup     : Install all dependencies in the currently"
-	@echo "                    active environment (system or venv)."
-	@echo " clean            : Remove all temporary files."
+	@echo " system-setup              : Install all dependencies in the currently"
+	@echo "                             active environment (system or venv)."
+	@echo " clean                     : Remove all temporary files."
 	@echo
 	@echo "Development Information:"
 	@echo " MODULES    = $(MODULES)"
@@ -94,6 +118,7 @@ system-setup:
 	@echo "Installing package development requirements..."
 	@echo "-------------------------------------------------------------"
 	@pip install -r dev_requirements.txt
+	@pip install -U setuptools wheel
 
 
 # ----------------------------------------------------------------------------
@@ -124,6 +149,15 @@ venv-bash: venv
 
 
 # ----------------------------------------------------------------------------
+#  RUN TARGET
+# ----------------------------------------------------------------------------
+
+run:
+	@source venv/bin/activate; \
+	PYTHONPATH=$(PYTHONPATH) ./vagrancyCtrl $(RUN_ARGS)
+
+
+# ----------------------------------------------------------------------------
 #  STYLE CHECKING
 # ----------------------------------------------------------------------------
 
@@ -145,6 +179,20 @@ flake8:
 
 
 # ----------------------------------------------------------------------------
+#  TESTS
+# ----------------------------------------------------------------------------
+
+tests: unittests functional-tests
+
+tests-coverage: unittests-coverage functional-tests-coverage
+	@coverage combine --rcfile=.coveragerc-combined .coverage .coverage-functional-tests
+	@echo "Unit and Functional Tests Code Coverage:"
+	@coverage report --rcfile=.coveragerc-combined
+	@coverage html --rcfile=.coveragerc-combined
+	@coverage xml --rcfile=.coveragerc-combined
+
+
+# ----------------------------------------------------------------------------
 #  UNIT TESTS
 # ----------------------------------------------------------------------------
 
@@ -153,20 +201,36 @@ unittests:
 
 unittests-coverage:
 	@rm -rf doc/coverage
+	@rm -f .coverage
 	@mkdir -p doc/coverage
 	@PYTHONPATH=$(PYTHONPATH) nosetests -v -w tests/unittests --with-coverage \
         --cover-package=vagrancy --cover-erase --cover-min-percentage=80 \
+	--cover-inclusive \
         --cover-branches \
-        --cover-html --cover-html-dir=../../doc/coverage \
-        --cover-xml  --cover-xml-file=../../doc/coverage/coverage.xml
+        --cover-html --cover-html-dir=../../doc/unittests-coverage \
+        --cover-xml  --cover-xml-file=../../doc/unittests-coverage/coverage.xml
 
 
 # ----------------------------------------------------------------------------
 #  FUNCTIONAL TESTS
 # ----------------------------------------------------------------------------
 
-test:
-	@test/run_tests.sh
+functional-tests:
+	@PYTHONPATH=$(PYTHONPATH) tests/functional_tests/run_tests.sh
+
+functional-tests-debug:
+	@PYTHONPATH=$(PYTHONPATH) tests/functional_tests/run_tests.sh -v -w
+
+functional-tests-save-output:
+	@PYTHONPATH=$(PYTHONPATH) tests/functional_tests/run_tests.sh -s
+
+functional-tests-coverage:
+	@rm -f .coverage-functional-tests
+	@PYTHONPATH=$(PYTHONPATH) tests/functional_tests/run_tests.sh -c
+	@echo "Functional Tests Code Coverage:"
+	@coverage report --rcfile=.coveragerc-functional
+	@coverage html --rcfile=.coveragerc-functional
+	@coverage xml --rcfile=.coveragerc-functional
 
 
 # ----------------------------------------------------------------------------
@@ -185,11 +249,28 @@ man:
 
 
 # ----------------------------------------------------------------------------
+#  DISTRIBUTION
+# ----------------------------------------------------------------------------
+
+pyinstaller: dist/vagrancyCtrl
+
+dist/vagrancyCtrl:
+	@pyinstaller vagrancyCtrl --onefile
+
+pyinstaller-test: dist/vagrancyCtrl
+	@tests/functional_tests/run_tests.sh -p
+
+pip-package:
+	@python3 setup.py sdist bdist_wheel
+
+
+# ----------------------------------------------------------------------------
 #  MAINTENANCE TARGETS
 # ----------------------------------------------------------------------------
 
 clean:
-	@rm -rf venv doc/coverage doc/build doc/source/apidoc .coverage
+	@rm -rf venv doc/*coverage doc/build doc/source/apidoc .coverage .coverage-*
+	@rm -rf dist build *.spec vagrancyCtrl.egg-info
 	@find . -name "__pycache__" -exec rm -rf {} \; 2>/dev/null || true
 	@find . -iname "*~" -exec rm -f {} \;
 	@find . -iname "*.pyc" -exec rm -f {} \;

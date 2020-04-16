@@ -1,0 +1,4 @@
+INFO: New version of box base/test (provider libvirt) determined as 1.2.4.
+INFO: Uploaded box base/test (provider libvirt, version 1.2.4) successfully.
+INFO: Deleting 1 old box files...
+INFO:  Deleted version 1.2.3 successfully.

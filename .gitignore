@@ -2,7 +2,12 @@
 *.pyc
 __pycache__
 .coverage
+.coverage-*
 venv/
 doc/build/
-doc/coverage/
+doc/*-coverage/
 doc/source/apidoc/
+dist/
+build/
+*.spec
+vagrancyCtrl.egg-info/

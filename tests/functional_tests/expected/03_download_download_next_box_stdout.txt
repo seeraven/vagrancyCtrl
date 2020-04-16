@@ -1,0 +1,1 @@
+Downloaded vagrant box base/test (provider virtualbox, version 2.0.1) successfully.

@@ -4,7 +4,7 @@ Unit Tests
 Unit tests ensure that the individual parts of your software work as expected.
 The benefit of unit tests are often visible when you are modifiing the software
 long after you have initially written it, e.g., if you are changing or extending
-it. In contrast to `integration tests` or `blackbox tests` are unit tests using
+it. In contrast to `integration tests` or `blackbox tests`, unit tests use the
 information about the internal structure of the components and are also called
 `whitebox tests`.
 
@@ -22,12 +22,9 @@ your test case.
 Executing Unit Tests
 --------------------
 
-To execute the unit tests, call:
+To execute the unit tests, call::
 
-.. code-block:: bash
-
-   make unittests
-
+    $ make unittests.venv
 
 
 Unit Test Code Coverage
@@ -37,13 +34,15 @@ The amount of lines covered by unit tests is often used as a metric to interpret
 the code quality. This might be misleading, since some developers concentrate
 more on `blackbox tests`. In addition, parts that deal with exceptions like
 hardware failure are difficult to test, so that enforcing a coverage of 100% is
-not a good idea.
+usually not a good idea.
 
-To show the unittests code coverage, call:
+To show the unittests code coverage, call::
 
-.. code-block:: bash
+    $ make unittests-coverage.venv
 
-   make unittests-coverage
+This shows you the coverage on the standard output an throws an error if the
+coverage is too low. It also generates an HTML report ``doc/coverage/index.html``
+that you can view using your favorite browser.
 
 
 .. _nose: https://nose.readthedocs.io/en/latest/

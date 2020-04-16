@@ -1,0 +1,25 @@
+usage: vagrancyCtrl [-h] [-u BASE_URL] {delete,download,print,upload} ...
+
+Interface with a vagrancy server to manage vagrant boxes. The following commands
+are available:
+ - print    : To print the vagrant boxes on the vagrancy server, or to list all
+              available versions of a certain box.
+ - delete   : Delete vagrant boxes on the vagrancy server.
+ - upload   : Upload a vagrant box to the vagrancy server.
+ - download : Download a vagrant box from the vagrancy server.
+
+Return codes:
+ 0 - Communication was successfull.
+ 1 - Communication failed.
+
+positional arguments:
+  {delete,download,print,upload}
+    delete              Delete a vagrant box.
+    download            Download a vagrant box.
+    print               Print the contents of the vacrancy server.
+    upload              Upload a vagrant box.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -u BASE_URL, --base-url BASE_URL
+                        Base URL of vagrancy. Default: http://127.0.0.1:9000

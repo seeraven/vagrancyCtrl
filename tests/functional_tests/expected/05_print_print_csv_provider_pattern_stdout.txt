@@ -1,0 +1,6 @@
+base/alternative,virtualbox,base/alternative/1.0.0/virtualbox,1.0.0,1.0.1
+base/dtest2,virtualbox,base/dtest2/2.0.0/virtualbox,2.0.0,2.0.1
+base/test2,virtualbox,base/test2/2.0.0/virtualbox,2.0.0,2.0.1
+base/non-semantic,virtualbox,base/non-semantic/1.2.3-alpha/virtualbox,1.2.3-alpha,
+base/same,virtualbox,base/same/1.2.3/virtualbox,1.2.3,1.2.4
+base/test,virtualbox,base/test/2.0.1/virtualbox,2.0.1,2.0.2

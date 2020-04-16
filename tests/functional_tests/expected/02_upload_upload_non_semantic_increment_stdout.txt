@@ -1,0 +1,3 @@
+ERROR: New version of box base/non-semantic (provider virtualbox) can not be determined!
+       Probably the box uses a non-semantic versioning!
+       Please specify the version!

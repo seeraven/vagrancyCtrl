@@ -7,22 +7,25 @@ Welcome to Vagrancy CLI Control's documentation!
    :name: mastertoc
 
    installation
+   usage
    development
 
 
 Introduction
 ------------
 
-Vagrancy CLI Control (vagrancyCtrl) is a command line tool to do something...
+Vagrancy CLI Control (vagrancyCtrl) is a command line tool to manage boxes
+stored in a vagrancy_ server.
 
 
 Requirements
 ------------
 
-vagrancyCtrl has the following requirements:
+Depending on the type of distribution, vagrancyCtrl has the following requirements:
 
-* python
-
+* A running vagrancy_ server.
+* python 3
+* python modules argcomplete and requests
 
 
 Indices and tables
@@ -31,3 +34,6 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+
+.. _vagrancy: https://github.com/seeraven/vagrancy

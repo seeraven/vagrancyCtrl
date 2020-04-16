@@ -13,65 +13,49 @@ Feature Development
 Features and bugfixes are developed in separate branches. For example, features are
 developed in feature branches, that are branches of the pattern
 :code:`feature/my-new-feature`. These branches can be stored on the remote server. To
-create a feature branch, call:
+create a feature branch, call::
 
-.. code-block:: bash
-
-   git branch feature/my-new-feature
-   git checkout feature/my-new-feature
+    $ git branch feature/my-new-feature
+    $ git checkout feature/my-new-feature
 
 Then commit on this branch as you like. On the first push to the remote server,
-you have to call:
+you have to call::
 
-.. code-block:: bash
-
-   git push --set-upstream origin feature/my-new-feature
+    $ git push --set-upstream origin feature/my-new-feature
 
 The feature branch can be rebased as you like. If you are modifiing already
-pushed commits, you need to perform a force push:
+pushed commits, you need to perform a force push::
 
-.. code-block:: bash
-
-   git push -f
+    $ git push --force-with-lease
 
 When you are finished with your work on your feature, you should perform
 the following steps:
 
-- Fetch the latest changes on the master branch:
+- Fetch the latest changes on the master branch::
 
-  .. code-block:: bash
+      $ git checkout master
+      $ git pull
 
-     git checkout master
-     git pull
+- Rebase your feature branch on the head of the master branch::
 
-- Rebase your feature branch on the head of the master branch:
-
-  .. code-block:: bash
-
-     git checkout feature/my-new-feature
-     git rebase master
+      $ git checkout feature/my-new-feature
+      $ git rebase master
 
 - Test your software again.
-- Squash your commits into one:
+- Squash your commits into one::
 
-  .. code-block:: bash
+      $ git rebase -i master
 
-     git rebase -i master
+- Merge your feature branch onto the master branch::
 
-- Merge your feature branch onto the master branch:
+      $ git checkout master
+      $ git merge feature/my-new-feature
+      $ git push
 
-  .. code-block:: bash
+- Remove your feature branch locally and remotely::
 
-     git checkout master
-     git merge feature/my-new-feature
-     git push
-
-- Remove your feature branch locally and remotely:
-
-  .. code-block:: bash
-
-     git branch -d feature/my-new-feature
-     git push origin --delete feature/my-new-feature
+      $ git branch -d feature/my-new-feature
+      $ git push origin --delete feature/my-new-feature
 
 
 Release Process

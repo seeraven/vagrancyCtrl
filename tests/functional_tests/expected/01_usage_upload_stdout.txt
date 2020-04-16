@@ -1,0 +1,25 @@
+usage: vagrancyCtrl upload [-h] [-d] input_file box_name provider [version]
+
+Upload a vagrant box to the vagrancy server. You have to specify the file, the
+name of the vagrant box, the provider and the version of the box. If you want
+to automatically generate a new version based on the latest version, you can
+use '-1' as the version specifier.
+
+In addition, you can automatically delete all other versions of the vagrant box
+on the vagrancy server. This is especially useful in combination with the
+automatic version number generation to upload a new 'latest' version.
+
+Return codes:
+ 0 - Communication was successfull.
+ 1 - Communication failed.
+
+positional arguments:
+  input_file            The vagrant box file, usually a gzip tar archive.
+  box_name              The vagrant box name. It must have a layout of <username>/<boxname>.
+  provider              The provider, e.g., libvirt or virtualbox.
+  version               The version of the vagrant box. The special value '-1' allows you to automatically generate a version number based on the latest version. Default: -1
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -d, --delete-other-versions
+                        If specified, other versions of the vagrant box are deleted on the vagrancy server after uploading the new box.

@@ -1,0 +1,1 @@
+INFO: Uploaded box base/alternative (provider virtualbox, version 1.0.0) successfully.

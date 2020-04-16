@@ -6,54 +6,82 @@ Development Documentation
    :caption: Contents:
 
    dev_styleguide
-   dev_workflow
-   dev_manage_3rdParty_modules
    dev_unittests
+   dev_workflow
    API Documentation <apidoc/vagrancy>
 
 
-Development Support
--------------------
+Introduction
+------------
+
+This section defines the general development guidelines of the vagrancyCtrl
+package.
 
 To ensure a high quality software product, the following topics are covered
 through various tools:
 
-- A common style guide:
+- A common style guide as described in :doc:`dev_styleguide`:
 
-  - Ensuring a common style, here the PEP8 style, by using the tool pycodestyle_.
-    The style can be checked by calling :code:`make pycodestyle`.
+  - Ensuring a common style, here the PEP8 style, by using the tools pylint_,
+    pycodestyle_ and flake8_. The style can be checked by calling::
+
+        $ make check-style.venv
 
 - A well tested software:
-    
-  - Performing a static code analysis using the tool pylint_. To perform the
-    static code analysis, call :code:`make pylint`.
-  - Ensure the functionality of the individual components by performing unit-tests
-    using nose_. To execute the tests, call :code:`make unittests`.  
+
+  - Performing a static code analysis using the tools flake8_ and pylint_. To
+    perform the static code analysis, call::
+
+        $ make check-style.venv
+      
+  - Ensure the functionality of the individual components by performing
+    :doc:`dev_unittests` using nose_. To execute the tests, call::
+
+        $ make unittests.venv
+      
   - Ensure the functionality of the application by performing various custom
-    `blackbox` tests. To execute the tests, call :code:`make tests`.
-  
-- A documentation:
+    `blackbox` tests. To execute the tests, call::
     
-  - Generate the user and developer documentation using sphinx_. To generate the
-    documentation, call :code:`make doc`.
+        $ make functional-tests.venv
+
+  - Ensure a high code coverage by the unit- and functional tests. To measure
+    the code coverage, call::
+
+        $ make tests-coverage.venv
+
+- A documentation:
+
+  - Generate the user and developer documentation using sphinx_::
+
+        $ make doc.venv
+
+  - Generate the man page also using sphinx_::
+
+        $ make man.venv
+
   - Changes are documented in the `git` repository. By enforcing a common style
     on the commit messages through git hooks, these comments can directly be
     used to generate a `Changelog`.
-  
-- A development workflow:
-    
-  - The development workflow as described below can not be enforced, but is
-    highly encouraged.
+
+- A development workflow as described in :doc:`dev_workflow`.
 
 
-However, the following topics are not automatically checked and need therefore
-special attention:
+Makefile Support
+----------------
 
-- Checking documentation coverage.
-- Checking blackbox test coverage.
+All available checks and tests are available using the provided
+``Makefile``. To see a list of all available targets, call::
+
+    $ make help
+
+For a developer, the default target performs all tests in a virtual python
+environment::
+
+    $ make
 
 
 .. _pycodestyle: https://pypi.org/project/pycodestyle/
 .. _pylint: https://www.pylint.org/
+.. _flake8: https://flake8.pycqa.org/en/latest/
 .. _sphinx: http://www.sphinx-doc.org/en/master/
 .. _nose: https://nose.readthedocs.io/en/latest/

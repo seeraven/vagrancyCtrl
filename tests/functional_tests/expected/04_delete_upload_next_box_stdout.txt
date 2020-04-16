@@ -1,0 +1,2 @@
+INFO: New version of box base/dtest (provider virtualbox) determined as 2.0.1.
+INFO: Uploaded box base/dtest (provider virtualbox, version 2.0.1) successfully.

@@ -1,0 +1,8 @@
+base/dtest2:
+ Provider:           virtualbox
+ Available Versions: 2.0.0
+ Latest Version:     2.0.0
+ Next Version:       2.0.1
+ Download URL:       http://127.0.0.1:9000/base/dtest2/2.0.0/virtualbox
+ Upload URL:         http://127.0.0.1:9000/base/dtest2/2.0.1/virtualbox
+

@@ -1,0 +1,1 @@
+INFO: Uploaded box base/dtest2 (provider virtualbox, version 2.0.0) successfully.

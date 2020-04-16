@@ -1,0 +1,48 @@
+base/alternative:
+ Provider:           virtualbox
+ Available Versions: 1.0.0
+ Latest Version:     1.0.0
+ Next Version:       1.0.1
+ Download URL:       http://127.0.0.1:9000/base/alternative/1.0.0/virtualbox
+ Upload URL:         http://127.0.0.1:9000/base/alternative/1.0.1/virtualbox
+
+base/dtest2:
+ Provider:           virtualbox
+ Available Versions: 2.0.0
+ Latest Version:     2.0.0
+ Next Version:       2.0.1
+ Download URL:       http://127.0.0.1:9000/base/dtest2/2.0.0/virtualbox
+ Upload URL:         http://127.0.0.1:9000/base/dtest2/2.0.1/virtualbox
+
+base/test2:
+ Provider:           virtualbox
+ Available Versions: 2.0.0
+ Latest Version:     2.0.0
+ Next Version:       2.0.1
+ Download URL:       http://127.0.0.1:9000/base/test2/2.0.0/virtualbox
+ Upload URL:         http://127.0.0.1:9000/base/test2/2.0.1/virtualbox
+
+base/non-semantic:
+ Provider:           virtualbox
+ Available Versions: 1.2.3-alpha
+ Latest Version:     1.2.3-alpha
+ Next Version:       undefined
+ Download URL:       http://127.0.0.1:9000/base/non-semantic/1.2.3-alpha/virtualbox
+ Upload URL:         http://127.0.0.1:9000/base/non-semantic/undefined/virtualbox
+
+base/same:
+ Provider:           virtualbox
+ Available Versions: 1.2.3
+ Latest Version:     1.2.3
+ Next Version:       1.2.4
+ Download URL:       http://127.0.0.1:9000/base/same/1.2.3/virtualbox
+ Upload URL:         http://127.0.0.1:9000/base/same/1.2.4/virtualbox
+
+base/test:
+ Provider:           virtualbox
+ Available Versions: 1.2.3 1.2.4 2.0.0 2.0.1
+ Latest Version:     2.0.1
+ Next Version:       2.0.2
+ Download URL:       http://127.0.0.1:9000/base/test/2.0.1/virtualbox
+ Upload URL:         http://127.0.0.1:9000/base/test/2.0.2/virtualbox
+

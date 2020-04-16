@@ -1,0 +1,2 @@
+INFO: Uploaded box base/same (provider virtualbox, version 1.2.3) successfully.
+INFO: No old box files to delete.
